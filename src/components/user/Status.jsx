@@ -67,8 +67,8 @@ const Status = () => {
 
   const handleEscalate = async (complaintId) => {
     try {
-      const response = await axios.post(`https://civic-bridge-backend-1.onrender.com/complaint/${complaintId}/escalate`, {
-        reason: escalationReason
+      await axios.post(`https://civic-bridge-backend-1.onrender.com/complaint/${complaintId}/escalate`, {
+        reason: escalationReason,
       });
       toast.success('Complaint escalated successfully');
       setEscalationReason('');
@@ -186,7 +186,7 @@ const Status = () => {
                   <img
                     key={idx}
                     src={img.startsWith('http') ? img : `https://civic-bridge-backend-1.onrender.com${img}`}
-                    alt={`Complaint Image ${idx + 1}`}
+                    alt={`Complaint ${idx + 1}`} // Simplified alt text
                     style={{ maxWidth: '100%', maxHeight: '400px', margin: '10px 0' }}
                   />
                 ))}

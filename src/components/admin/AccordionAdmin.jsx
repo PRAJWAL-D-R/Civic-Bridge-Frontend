@@ -22,31 +22,28 @@ const AccordionAdmin = () => {
       try {
         const response = await axios.get('https://civic-bridge-backend-1.onrender.com/status');
         const complaints = response.data;
-        console.log('Admin received complaints:', complaints);
         const unassignedComplaints = complaints.filter(complaint => !complaint.assigned);
         setComplaintList(unassignedComplaints);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
 
     const getAssignedComplaints = async () => {
       try {
         const response = await axios.get('https://civic-bridge-backend-1.onrender.com/assignedComplaints');
-        const assigned = response.data;
-        setAssignedComplaints(assigned);
+        setAssignedComplaints(response.data);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
 
     const getAgentsRecords = async () => {
       try {
         const response = await axios.get('https://civic-bridge-backend-1.onrender.com/AgentUsers');
-        const agents = response.data;
-        setAgentList(agents);
+        setAgentList(response.data);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
 
@@ -57,7 +54,6 @@ const AccordionAdmin = () => {
 
   const handleSelection = async (agentId, complaintId, status, agentName) => {
     try {
-      await axios.get(`https://civic-bridge-backend-1.onrender.com/AgentUsers/${agentId}`);
       const complaintToAssign = complaintList.find(complaint => complaint._id === complaintId);
       const assignedComplaint = {
         agentId,
@@ -68,13 +64,12 @@ const AccordionAdmin = () => {
       };
 
       await axios.post('https://civic-bridge-backend-1.onrender.com/assignedComplaints', assignedComplaint);
-      const updatedComplaint = { ...complaintToAssign, assigned: true, agentName };
-      const updatedComplaintList = complaintList.filter((complaint) => complaint._id !== complaintId);
+      const updatedComplaintList = complaintList.filter(complaint => complaint._id !== complaintId);
       setComplaintList(updatedComplaintList);
       setAssignedComplaints([...assignedComplaints, assignedComplaint]);
       alert(`Complaint assigned to the Agent ${agentName}`);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -101,10 +96,8 @@ const AccordionAdmin = () => {
     );
   };
 
-  // Render the "View Image" button at the bottom of the card
   const renderViewImageButton = (images) => {
     if (!images || images.length === 0) return null;
-    
     return (
       <Button 
         variant="outline-primary" 
@@ -125,7 +118,6 @@ const AccordionAdmin = () => {
     );
   };
 
-  // Render the Image Viewer Modal
   const renderImageViewer = () => {
     if (!selectedImages || selectedImages.length === 0) return null;
 
@@ -147,7 +139,7 @@ const AccordionAdmin = () => {
           
           <img 
             src={selectedImages[currentImageIndex]} 
-            alt={`Complaint image ${currentImageIndex + 1}`} 
+            alt={`Complaint ${currentImageIndex + 1}`} // Simplified alt text
             className="image-viewer-image"
           />
           

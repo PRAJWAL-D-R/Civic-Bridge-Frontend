@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 import Alert from 'react-bootstrap/Alert';
-import { Accordion, Card, Container, Modal } from 'react-bootstrap';
+import { Accordion, Card, Container } from 'react-bootstrap'; // Removed Modal and Button
 import Footer from '../common/FooterC';
 import axios from 'axios';
-import { toast } from 'react-hot-toast'; // Import toast
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye } from '@fortawesome/free-solid-svg-icons';
+import { toast } from 'react-hot-toast';
 
 const AgentInfo = () => {
    const navigate = useNavigate();
    const [ordinaryList, setOrdinaryList] = useState([]);
-   const [selectedAgent, setSelectedAgent] = useState(null);
-   const [showModal, setShowModal] = useState(false);
 
    // Styles object
    const styles = {
@@ -71,13 +66,6 @@ const AgentInfo = () => {
          color: '#495057',
          marginBottom: '0.8rem',
       },
-      viewButton: {
-         borderRadius: '8px',
-         padding: '0.5rem 1.5rem',
-         transition: 'all 0.3s ease',
-         marginTop: '1rem',
-         border: '1.5px solid #007bff',
-      },
       alert: {
          borderRadius: '12px',
          padding: '1.5rem',
@@ -102,11 +90,6 @@ const AgentInfo = () => {
       };
       getOrdinaryRecords();
    }, [navigate]);
-
-   const handleViewAgent = (agent) => {
-      setSelectedAgent(agent);
-      setShowModal(true);
-   };
 
    return (
       <>
@@ -144,38 +127,6 @@ const AgentInfo = () => {
                </Accordion.Item>
             </Accordion>
          </Container>
-
-         <Modal show={showModal} onHide={() => setShowModal(false)}>
-            <Modal.Header closeButton>
-               <Modal.Title>Agent Details</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-               {selectedAgent && (
-                  <div>
-                     <p><strong>Name:</strong> {selectedAgent.name}</p>
-                     <p><strong>Email:</strong> {selectedAgent.email}</p>
-                     <p><strong>Phone:</strong> {selectedAgent.phone}</p>
-                     <p><strong>District:</strong> {selectedAgent.district}</p>
-                     <p><strong>User Type:</strong> {selectedAgent.userType}</p>
-                     {selectedAgent.image && (
-                        <div className="mt-3">
-                           <p><strong>Profile Image:</strong></p>
-                           <img 
-                              src={selectedAgent.image} 
-                              alt="Profile" 
-                              style={{ maxWidth: '100%', maxHeight: '200px' }}
-                           />
-                        </div>
-                     )}
-                  </div>
-               )}
-            </Modal.Body>
-            <Modal.Footer>
-               <Button variant="secondary" onClick={() => setShowModal(false)}>
-                  Close
-               </Button>
-            </Modal.Footer>
-         </Modal>
 
          <Footer />
       </>

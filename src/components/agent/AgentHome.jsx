@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Card from 'react-bootstrap/Card';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; // Removed NavLink
 import axios from 'axios';
 import Alert from 'react-bootstrap/Alert';
 import Collapse from 'react-bootstrap/Collapse';
@@ -301,7 +301,7 @@ const AgentHome = () => {
                <div className="modal-dialog modal-lg">
                   <div className="modal-content">
                      <div className="modal-header">
-                        <h5 className="modal-title">Complaint Image{modalImages.length > 1 ? 's' : ''}</h5>
+                        <h5 className="modal-title">Complaint {modalImages.length > 1 ? 'Images' : 'Image'}</h5>
                         <button type="button" className="btn-close" onClick={() => setImageModalOpen(false)}></button>
                      </div>
                      <div className="modal-body text-center">
@@ -309,7 +309,7 @@ const AgentHome = () => {
                            <img
                               key={idx}
                               src={img.startsWith('http') ? img : `https://civic-bridge-backend-1.onrender.com${img}`}
-                              alt={`Complaint Image ${idx + 1}`}
+                              alt={`Complaint ${idx + 1}`} // Simplified alt text
                               style={{ maxWidth: '100%', maxHeight: '400px', margin: '10px 0' }}
                            />
                         ))}
