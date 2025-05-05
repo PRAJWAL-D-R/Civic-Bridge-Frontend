@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
 const ChatWindow = (props) => {
@@ -176,23 +176,22 @@ const ChatWindow = (props) => {
     style.innerHTML = keyframes;
     document.head.appendChild(style);
     return () => document.head.removeChild(style);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const fetchMessageList = useCallback(async () => {
+  const fetchMessageList = async () => {
     try {
       const response = await axios.get(`https://civic-bridge-backend-1.onrender.com/${props.complaintId}`);
       setMessageList(response.data);
     } catch (error) {
       console.error('Error fetching messages:', error);
     }
-  }, [props.complaintId]);
+  };
 
   useEffect(() => {
     fetchMessageList();
     const interval = setInterval(fetchMessageList, 5000);
     return () => clearInterval(interval);
-  }, [fetchMessageList]);
+  }, [props.complaintId]);
 
   useEffect(() => {
     scrollToBottom();

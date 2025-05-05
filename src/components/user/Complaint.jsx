@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { ToastContainer, toast } from 'react-toastify';
@@ -7,12 +7,32 @@ import 'react-toastify/dist/ReactToastify.css';
 import './Complaint.css';
 
 const Complaint = () => {
+   const [isSubmitting, setIsSubmitting] = useState(false);
    const [imagePreview, setImagePreview] = useState([]);
    const [imageFile, setImageFile] = useState([]);
+   const [districts, setDistricts] = useState([]);
    const user = JSON.parse(localStorage.getItem('user'));
 
    const FILE_SIZE = 5 * 1024 * 1024; // 5MB
-   const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/png"];
+   const SUPPORTED_FORMATS = [
+      "image/jpg", 
+      "image/jpeg", 
+      "image/png"
+   ];
+
+   // Fetch districts on component mount
+   useEffect(() => {
+      const fetchDistricts = async () => {
+         try {
+            const response = await axios.get('https://civic-bridge-backend-1.onrender.com/districts');
+            setDistricts(response.data);
+         } catch (error) {
+            console.error('Error fetching districts:', error);
+            toast.error('Failed to fetch districts');
+         }
+      };
+      fetchDistricts();
+   }, []);
 
    const validationSchema = Yup.object({
       name: Yup.string()
@@ -46,7 +66,8 @@ const Complaint = () => {
 
    const handleImageChange = (event) => {
       const files = Array.from(event.currentTarget.files);
-
+      
+      // Check if files are selected
       if (files.length === 0) {
          setImagePreview([]);
          setImageFile([]);
@@ -54,17 +75,21 @@ const Complaint = () => {
          return;
       }
 
+      // Check if total files don't exceed 5
       if (files.length > 5) {
          toast.error("You can only upload up to 5 images", toastConfig);
          return;
       }
 
+      // Validate each file
       const validFiles = files.filter(file => {
+         // Check file size
          if (file.size > FILE_SIZE) {
             toast.error(`File ${file.name} is too large. Maximum size is 5MB`, toastConfig);
             return false;
          }
 
+         // Check file type
          if (!SUPPORTED_FORMATS.includes(file.type)) {
             toast.error(`File ${file.name} has unsupported format. Only JPG, JPEG and PNG are allowed`, toastConfig);
             return false;
@@ -77,9 +102,11 @@ const Complaint = () => {
          return;
       }
 
+      // Update form state with valid files
       formik.setFieldValue("images", validFiles);
       setImageFile(validFiles);
 
+      // Create previews for valid files
       const previews = validFiles.map((file) => {
          const reader = new FileReader();
          reader.readAsDataURL(file);
@@ -91,6 +118,7 @@ const Complaint = () => {
       Promise.all(previews).then((results) => setImagePreview(results));
    };
 
+   // Custom toast configuration
    const toastConfig = {
       position: "top-right",
       autoClose: 5000,
@@ -118,18 +146,20 @@ const Complaint = () => {
       },
       validationSchema,
       onSubmit: async (values, { resetForm }) => {
+         setIsSubmitting(true);
          try {
             const formData = new FormData();
-            Object.keys(values).forEach((key) => {
-               if (key === 'images') {
-                  values.images.forEach((image) => formData.append('images', image));
+            
+            for (const key in values) {
+               if (key === 'images' && imageFile.length > 0) {
+                  imageFile.forEach((file) => formData.append('images', file));
                } else {
                   formData.append(key, values[key]);
                }
-            });
-
+            }
+            
             await axios.post(
-               `http://localhost:8000/Complaint/${user._id}`, 
+               `https://civic-bridge-backend-1.onrender.com/Complaint/${user._id}`, 
                formData, 
                {
                   headers: {
@@ -137,11 +167,16 @@ const Complaint = () => {
                   }
                }
             );
+            
             toast.success("🎉 Complaint submitted successfully!", toastConfig);
             resetForm();
+            setImagePreview([]);
+            setImageFile([]);
          } catch (err) {
             toast.error("❌ Failed to submit complaint. Please try again.", toastConfig);
             console.error(err);
+         } finally {
+            setIsSubmitting(false);
          }
       },
    });
@@ -331,7 +366,7 @@ const Complaint = () => {
                   <button 
                      type="submit" 
                      className="submit-button" 
-                     disabled={formik.isSubmitting} // Corrected usage
+                     disabled={isSubmitting}
                   >
                      Register Complaint
                   </button>
