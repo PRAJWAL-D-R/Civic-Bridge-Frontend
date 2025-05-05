@@ -1,0 +1,16 @@
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+ }
+ 
+ .App {
+   max-width: 100%;
+   background-color: #2912d7;
+   background-image: url('../src/Images/background.jpg');
+   background-size: cover;
+   background-position: center;
+   background-attachment: fixed;  
+   min-height: 100vh;         
+ }
+ 

@@ -1,0 +1,192 @@
+/* -------------------------------- */
+/* Accordion Main Layout */
+/* -------------------------------- */
+.accordian {
+  margin: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* -------------------------------- */
+/* Card Styling */
+/* -------------------------------- */
+.card {
+  transition: transform 0.2s ease-in-out;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-body {
+  padding: 1.25rem;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.card-text {
+  margin-bottom: 0.5rem;
+  word-wrap: break-word;
+}
+
+/* -------------------------------- */
+/* Dropdown Styling Inside Accordion */
+/* -------------------------------- */
+.accordion .card-body .dropdown {
+  width: 100%;
+  margin-top: 10px;
+  position: relative;
+}
+
+.accordion .card-body .dropdown-toggle {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  background-color: #f8f9fa;
+  border: 1px solid #ccc;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.accordion .card-body .dropdown-menu {
+  width: 100%;
+  margin-top: 0.5rem;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Make the dropdown open upwards */
+.accordion .card-body .dropup .dropdown-menu {
+  top: -10px;
+  margin-bottom: 10px;
+}
+
+/* Dropdown Items */
+.accordion .card-body .dropdown-item {
+  padding: 10px 15px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.accordion .card-body .dropdown-item:hover {
+  background-color: #f1f1f1;
+  color: #007bff;
+}
+
+.accordion .card-body .dropdown-item:focus {
+  background-color: #007bff;
+  color: white;
+}
+
+/* -------------------------------- */
+/* Alerts */
+/* -------------------------------- */
+.alert {
+  width: 100%;
+  margin: 1rem 0;
+}
+
+/* -------------------------------- */
+/* Flex Container Inside Accordion */
+/* -------------------------------- */
+.accordion-body > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+/* -------------------------------- */
+/* Animations */
+/* -------------------------------- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* -------------------------------- */
+/* Scrollbar for Dropdown */
+/* -------------------------------- */
+.dropdown-menu::-webkit-scrollbar {
+  width: 6px;
+}
+
+.dropdown-menu::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.dropdown-menu::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+.dropdown-menu::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* -------------------------------- */
+/* Responsive Design */
+/* -------------------------------- */
+@media screen and (max-width: 768px) {
+  .accordian {
+    margin: 10px;
+  }
+
+  .accordion-body > div {
+    margin: 10px !important;
+  }
+
+  .card {
+    width: calc(50% - 20px) !important;
+    margin: 10px !important;
+  }
+}
+
+@media screen and (max-width: 325px) {
+  .accordian {
+    margin: 5px;
+  }
+
+  .card {
+    width: 100% !important;
+    margin: 10px 0 !important;
+  }
+
+  .card-body {
+    padding: 1rem;
+  }
+
+  .card-title {
+    font-size: 1rem;
+  }
+
+  .card-text {
+    font-size: 0.9rem !important;
+  }
+
+  .accordion-body {
+    padding: 0.5rem !important;
+  }
+
+  .accordion-body > div {
+    margin: 5px !important;
+  }
+
+  .dropdown-toggle {
+    font-size: 0.9rem;
+    padding: 0.375rem 0.75rem;
+  }
+}

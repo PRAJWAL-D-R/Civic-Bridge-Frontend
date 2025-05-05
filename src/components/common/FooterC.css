@@ -1,0 +1,39 @@
+.footer-container {
+  height: 200px;
+  margin-top: 101px;
+  background: linear-gradient(to right, #1e3c72 0%, #2a5298 100%);
+  color: #fff;
+  text-align: center;
+}
+
+.footer-content {
+  padding: 30px;
+}
+
+.footer-title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.footer-developers {
+  margin: 10px 0;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: left;
+  padding-left: 30px;
+}
+
+.developer-name {
+  color: #FFBB00;
+}
+
+.developer-name-alt {
+  color: #4DB6AC;
+}
+
+.footer-year {
+  margin: 15px 0;
+  font-size: 16px;
+  color: #ccc;
+}
