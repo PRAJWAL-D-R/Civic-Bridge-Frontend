@@ -47,7 +47,7 @@ const Complaint = () => {
       taluk: Yup.string().required("Taluk is required"),
       wardNo: Yup.string().required("Ward No./Street Name is required"),
       department: Yup.string().required("Department is required"),
-      district: Yup.string().required("District is required"),
+      // district: Yup.string().required("District is required"),
       comment: Yup.string().required("Description is required"),
       images: Yup.array().of(
          Yup.mixed()
