@@ -1,13 +1,18 @@
 .footer-container {
-  height: 200px;
+  height: auto; /* Changed from fixed height */
+  min-height: 200px;
   margin-top: 101px;
   background: linear-gradient(to right, #1e3c72 0%, #2a5298 100%);
   color: #fff;
   text-align: center;
+  width: 100%;
 }
 
 .footer-content {
-  padding: 30px;
+  padding: 30px 15px; /* Added horizontal padding */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .footer-title {
@@ -22,6 +27,7 @@
   font-weight: 600;
   text-align: left;
   padding-left: 30px;
+  align-self: flex-start;
 }
 
 .developer-name {
@@ -36,4 +42,44 @@
   margin: 15px 0;
   font-size: 16px;
   color: #ccc;
+}
+
+/* Media queries for responsive design */
+@media screen and (max-width: 768px) {
+  .footer-container {
+    margin-top: 60px; /* Reduced top margin on smaller screens */
+  }
+  
+  .footer-title {
+    font-size: 20px; /* Slightly smaller title */
+  }
+  
+  .footer-developers {
+    padding-left: 15px; /* Reduced padding */
+    width: 100%; /* Full width */
+    box-sizing: border-box;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .footer-container {
+    margin-top: 40px; /* Further reduced top margin on mobile */
+  }
+  
+  .footer-title {
+    font-size: 18px; /* Even smaller title on mobile */
+  }
+  
+  .footer-developers {
+    font-size: 14px; /* Smaller font size */
+    padding-left: 10px;
+  }
+  
+  .footer-year {
+    font-size: 14px; /* Smaller year text */
+  }
+  
+  .footer-content {
+    padding: 20px 10px; /* Less padding on mobile */
+  }
 }
